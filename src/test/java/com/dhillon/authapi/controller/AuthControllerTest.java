@@ -3,10 +3,10 @@ package com.dhillon.authapi.controller;
 import com.dhillon.authapi.model.User;
 import com.dhillon.authapi.model.VerificationToken;
 import com.dhillon.authapi.repository.UserRepository;
-// import com.dhillon.authapi.security.JwtUtil;
+ import com.dhillon.authapi.security.JwtUtil;
 import com.dhillon.authapi.service.EmailService;
 import com.dhillon.authapi.service.UserService;
-// import com.dhillon.authapi.service.CustomUserDetailsService;
+ import com.dhillon.authapi.service.CustomUserDetailsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -15,10 +15,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-// import org.springframework.security.authentication.AuthenticationManager;
-// import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-// import org.springframework.security.core.Authentication;
-// import org.springframework.security.core.userdetails.UserDetails;
+ import org.springframework.security.authentication.AuthenticationManager;
+ import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+ import org.springframework.security.core.Authentication;
+ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -37,14 +37,14 @@ public class AuthControllerTest {
     private UserService userService;
     @MockBean
     private EmailService emailService;
-    // @MockBean
-    // private JwtUtil jwtUtil;
-    // @MockBean
-    // private AuthenticationManager authenticationManager;
+     @MockBean
+     private JwtUtil jwtUtil;
+     @MockBean
+     private AuthenticationManager authenticationManager;
     @MockBean
     private UserRepository userRepository;
-    // @MockBean
-    // private CustomUserDetailsService customUserDetailsService;
+     @MockBean
+     private CustomUserDetailsService customUserDetailsService;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -56,7 +56,7 @@ public class AuthControllerTest {
         Mockito.when(userService.registerUser(Mockito.any())).thenReturn(user);
         Mockito.when(userService.createVerificationToken(Mockito.any(), Mockito.anyString())).thenReturn(
                 new VerificationToken(null, UUID.randomUUID().toString(), "userid", new java.util.Date()));
-        // Mockito.doNothing().when(emailService).sendVerificationEmail(Mockito.anyString(), Mockito.anyString());
+         Mockito.doNothing().when(emailService).sendVerificationEmail(Mockito.anyString(), Mockito.anyString());
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/auth/register")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -81,11 +81,11 @@ public class AuthControllerTest {
     void testLogin() throws Exception {
         User user = new User("userid", "testuser", "test@email.com", "password", true, null);
         Mockito.when(userService.findByEmail("test@email.com")).thenReturn(Optional.of(user));
-        // Authentication authentication = Mockito.mock(Authentication.class);
-        // UserDetails userDetails = Mockito.mock(UserDetails.class);
-        // Mockito.when(authenticationManager.authenticate(Mockito.any(UsernamePasswordAuthenticationToken.class))).thenReturn(authentication);
-        // Mockito.when(authentication.getPrincipal()).thenReturn(userDetails);
-        // Mockito.when(jwtUtil.generateToken(Mockito.anyString(), Mockito.anyString())).thenReturn("jwtToken");
+         Authentication authentication = Mockito.mock(Authentication.class);
+         UserDetails userDetails = Mockito.mock(UserDetails.class);
+         Mockito.when(authenticationManager.authenticate(Mockito.any(UsernamePasswordAuthenticationToken.class))).thenReturn(authentication);
+         Mockito.when(authentication.getPrincipal()).thenReturn(userDetails);
+         Mockito.when(jwtUtil.generateToken(Mockito.anyString(), Mockito.anyString())).thenReturn("jwtToken");
 
         String json = "{" +
                 "\"email\":\"test@email.com\"," +
