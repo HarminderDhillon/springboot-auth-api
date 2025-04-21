@@ -42,7 +42,7 @@ public class AuthController {
         User savedUser = userService.registerUser(user);
         String token = UUID.randomUUID().toString();
         userService.createVerificationToken(savedUser, token);
-//        emailService.sendVerificationEmail(savedUser.email(), token);
+        emailService.sendVerificationEmail(savedUser.email(), token);
         return ResponseEntity.ok(Map.of("message", "Registration successful. Check your email for verification."));
     }
 
@@ -51,9 +51,9 @@ public class AuthController {
         String email = loginRequest.get("email");
         String password = loginRequest.get("password");
         Optional<User> userOpt = userService.findByEmail(email);
-//        if (userOpt.isEmpty() || !userOpt.get().enabled()) {
-//            return ResponseEntity.badRequest().body(Map.of("error", "Invalid credentials or email not verified"));
-//        }
+        if (userOpt.isEmpty() || !userOpt.get().enabled()) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Invalid credentials or email not verified"));
+        }
         // Authentication authentication = authenticationManager.authenticate(
         //         new UsernamePasswordAuthenticationToken(userOpt.get().username(), password)
         // );
