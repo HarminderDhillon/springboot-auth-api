@@ -18,7 +18,7 @@ A RESTful authentication API built with Spring Boot 3.x, Java 21, MongoDB, JWT, 
 2. Configure MongoDB and email settings in `src/main/resources/application.properties`.
 3. Build and run:
    ```sh
-   ./gradlew bootRun
+   mvn spring-boot:run
    ```
 
 ## Endpoints
