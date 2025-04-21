@@ -1,0 +1,12 @@
+com/dhillon/authapi/model/VerificationToken.class
+com/dhillon/authapi/repository/UserRepository.class
+com/dhillon/authapi/security/JwtUtil.class
+com/dhillon/authapi/model/User.class
+com/dhillon/authapi/AuthApiApplication.class
+com/dhillon/authapi/repository/VerificationTokenRepository.class
+com/dhillon/authapi/service/EmailService.class
+com/dhillon/authapi/service/UserService.class
+com/dhillon/authapi/security/JwtAuthFilter.class
+com/dhillon/authapi/controller/AuthController.class
+com/dhillon/authapi/service/CustomUserDetailsService.class
+com/dhillon/authapi/security/SecurityConfig.class
