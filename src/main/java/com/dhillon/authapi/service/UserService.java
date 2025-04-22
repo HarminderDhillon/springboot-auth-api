@@ -36,6 +36,10 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
+    public Optional<User> findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
     public VerificationToken createVerificationToken(User user, String token) {
         VerificationToken verificationToken = new VerificationToken(
             null,

@@ -43,6 +43,9 @@ public class AuthController {
         if (userService.findByEmail(user.email()).isPresent()) {
             return ResponseEntity.badRequest().body(Map.of("error", "Email already registered"));
         }
+        if (userService.findByUsername(user.username()).isPresent()) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Username already taken"));
+        }
         User savedUser = userService.registerUser(user);
         String token = UUID.randomUUID().toString();
         userService.createVerificationToken(savedUser, token);
@@ -85,5 +88,15 @@ public class AuthController {
         }
         userService.enableUser(userOpt.get());
         return ResponseEntity.ok(Map.of("message", "Email verified. You can now log in."));
+    }
+
+    @DeleteMapping("/delete-by-email")
+    public ResponseEntity<?> deleteByEmail(@RequestParam String email) {
+        Optional<User> userOpt = userService.findByEmail(email);
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.ok(Map.of("message", "No user found with this email (nothing deleted)."));
+        }
+        userRepository.delete(userOpt.get());
+        return ResponseEntity.ok(Map.of("message", "User deleted."));
     }
 }
